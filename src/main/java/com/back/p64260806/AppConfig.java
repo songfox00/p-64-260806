@@ -3,20 +3,9 @@ package com.back.p64260806;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 
 @Configuration
 public class AppConfig {
-
-    @Bean
-    public PersonRepository personRepository() {
-        return new PersonRepository(1);
-    }
-
-    @Bean
-    public PersonRepository personRepositoryV2() {
-        return new PersonRepository(2);
-    }
 
     @Bean
     public ApplicationRunner myApplicationRunner3() {
@@ -24,20 +13,6 @@ public class AppConfig {
             work1();
             work2();
         };
-    }
-
-    @Bean
-    @Order(2)
-    public ApplicationRunner applicationRunner2(){
-        System.out.println("myApplicationRunner2");
-        return new MyApplicationRunner(2);
-    }
-
-    @Bean
-    @Order(1)
-    public ApplicationRunner applicationRunner1(){
-        System.out.println("myApplicationRunner1");
-        return new MyApplicationRunner(1);
     }
 
     public void work1() {
