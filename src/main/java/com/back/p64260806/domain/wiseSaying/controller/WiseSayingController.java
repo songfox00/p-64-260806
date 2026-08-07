@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class WiseSayingController {
@@ -23,7 +24,7 @@ public class WiseSayingController {
 
     private int lastId = 5;
 
-    @GetMapping("/wiseSaying/write")
+    @GetMapping("/wiseSayings/write")
     @ResponseBody
     public String actionAdd(String content, String author) {
 
@@ -40,7 +41,36 @@ public class WiseSayingController {
         return "%d번 명언이 등록되었습니다.".formatted(wiseSaying.getId());
     }
 
-    @GetMapping("/wiseSaying/delete/{id}")
+    @GetMapping("/wiseSayings")
+    @ResponseBody
+    public String list() {
+
+        String wiseSayingList = wiseSayings.stream()
+                .map(w -> "<li>%s / %s / %s</li>".formatted(w.getId(), w.getContent(), w.getAuthor()))
+                .collect(Collectors.joining("\n"));
+
+        return """
+                <ul>
+                %s
+                </ul>
+                """.formatted(wiseSayingList);
+    }
+
+    @GetMapping("/wiseSayings/{id}")
+    @ResponseBody
+    public String detail(
+            @PathVariable int id
+    ) {
+
+        WiseSaying wiseSaying = findById(id);
+        return """
+                <h1>번호 : %s</h1>
+                <div>명언 : %s</div>
+                <div>작가 : %s</div>
+                """.formatted(wiseSaying.getId(), wiseSaying.getContent(), wiseSaying.getAuthor());
+    }
+
+    @GetMapping("/wiseSayings/delete/{id}")
     @ResponseBody
     public String delete(
             @PathVariable int id
@@ -52,7 +82,7 @@ public class WiseSayingController {
         return "%d번 명언이 삭제되었습니다".formatted(id);
     }
 
-    @GetMapping("/wiseSaying/modify/{id}")
+    @GetMapping("/wiseSayings/modify/{id}")
     @ResponseBody
     public String modify(
             @PathVariable int id,
