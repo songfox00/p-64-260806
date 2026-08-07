@@ -2,6 +2,7 @@ package com.back.p64260806.global;
 
 import com.back.p64260806.domain.member.entity.Member;
 import com.back.p64260806.domain.member.service.MemberService;
+import com.back.p64260806.domain.wiseSaying.service.WiseSayingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
@@ -18,14 +19,16 @@ public class BaseInitData {
     @Lazy
     private BaseInitData self;
     private final MemberService memberService;
+    private final WiseSayingService wiseSayingService;
 
     @Bean
     ApplicationRunner initDataRunner() {
         return args -> {
             self.work1();
             self.work2();
-        };
+            work3();
 
+        };
     }
 
     @Transactional
@@ -48,5 +51,18 @@ public class BaseInitData {
         System.out.println("work2 수행");
         Member member4 = memberService.findByUsername("user2").get();
         member4.setNickname("new user2"); //더티체킹에 의해 트랜잭션 종료 후 DB 반영
+    }
+
+    void work3() {
+
+        if(wiseSayingService.count() > 0) {
+            return;
+        }
+
+        wiseSayingService.write("명언1", "작가1");
+        wiseSayingService.write("명언2", "작가2");
+        wiseSayingService.write("명언3", "작가3");
+        wiseSayingService.write("명언4", "작가4");
+        wiseSayingService.write("명언5", "작가5");
     }
 }
