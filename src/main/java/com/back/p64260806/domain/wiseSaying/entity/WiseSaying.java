@@ -1,7 +1,5 @@
 package com.back.p64260806.domain.wiseSaying.entity;
 
-import com.back.p64260806.global.BaseEntity;
-import jakarta.persistence.Entity;
 import lombok.*;
 
 @NoArgsConstructor
@@ -10,8 +8,8 @@ import lombok.*;
 @Setter
 @EqualsAndHashCode
 @ToString
-@Entity
-public class WiseSaying extends BaseEntity {
+public class WiseSaying {
+    private int id;
     private String content;
     private String author;
 }
