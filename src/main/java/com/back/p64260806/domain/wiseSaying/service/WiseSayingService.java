@@ -1,7 +1,7 @@
 package com.back.p64260806.domain.wiseSaying.service;
 
 import com.back.p64260806.domain.wiseSaying.entity.WiseSaying;
-import com.back.p64260806.domain.wiseSaying.repository.WiseSayingMemRepository;
+import com.back.p64260806.domain.wiseSaying.repository.WiseSayingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class WiseSayingService {
 
-    private final WiseSayingMemRepository wiseSayingMemRepository;
+    private final WiseSayingRepository wiseSayingMemRepository;
 
     public WiseSaying write(String content, String author) {
 
